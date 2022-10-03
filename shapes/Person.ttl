@@ -1,5 +1,3 @@
-# https://www.w3.org/TR/shacl/#shacl-example
-
 @prefix dash: <http://datashapes.org/dash#> .
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
@@ -16,8 +14,7 @@ schema:PersonShape
         sh:path schema:givenName ;
         sh:order 1 ;
         sh:or ( [ sh:datatype xsd:string ] [ sh:datatype rdf:langString] ) ;
-        sh:name "given name"@en ;
-        sh:name "Gegeven name"@nl ;
+        sh:name "given name" ;
         sh:minCount 1 ;
         sh:maxCount 1 ;
     ] ;

@@ -9,3 +9,11 @@ export type PersonShape = {
   gender?: 'female' | 'male',
   address?: Array<AddressShape>
 }
+
+export type AddressShape = {
+  streetAddress: string,
+  addressRegion: string,
+  addressLocality: string,
+  postalCode: string | number,
+  addressCountry: string
+}

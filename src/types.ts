@@ -1,13 +1,18 @@
 export type Options = {
   // @see https://www.w3.org/TR/json-ld/#context-definitions
   prefixes?: { [key: string]: string }
+  shapeIri?: string
 }
 
-export type Meta = {
+export type ObjectMeta = {
   name: string,
-  predicates?: Array<Meta>
+  properties?: Array<PropertyMeta>
+}
+
+export type PropertyMeta = {
+  name: string,
   singular?: boolean,
   required?: boolean,
-  referencedClasses?: Array<string>,
+  referencedTypes?: Array<string>,
   datatype?: string
 }

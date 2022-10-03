@@ -1,16 +1,13 @@
 import { Store } from './deps.ts'
-import { Meta, Options } from './types.ts'
+import { ObjectMeta, Options } from './types.ts'
 import { indexation } from './indexation.ts'
+import { template } from './template.ts'
 
-export const shaclToType = async (shaclStore: Store, options: Options = {}) => {
-  const meta: Meta = await indexation(shaclStore, options)
+export const shaclToType = async (shaclStore: Store, options: Options = {}): Promise<string> => {
+  const meta: ObjectMeta = await indexation(shaclStore, options)
 
-  return `export type ${meta.name} = {
-${meta.predicates!.map(predicate => {
-  const name = /\:|\-/g.test(predicate.name) ? `'${predicate.name}'` : predicate.name
-  const datatype = predicate.singular ? predicate.datatype ?? 'any' : `Array<${predicate.datatype ?? 'any'}>`
-
-  return `  ${name}${predicate.required ? '' : '?'}: ${datatype}`
-}).join(',\n')}
-}`
+  const otherTypes = await Promise.all(meta.properties!.flatMap(property => property.referencedTypes).filter(Boolean)
+  .map(shapeIri => shaclToType(shaclStore, Object.assign({ shapeIri }, options))))
+  
+  return template(meta) + (otherTypes.length ? '\n\n' + otherTypes.join('\n\n') : '')
 }

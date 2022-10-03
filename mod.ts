@@ -1,0 +1,1 @@
+export { shaclToType } from './src/shaclToType.ts'

@@ -4,7 +4,7 @@ import { template } from './template.ts'
 import { getMetas } from './helpers/getMetas.ts'
 import { createQuery } from './createQuery.ts'
 
-export const shaclToFrontendFile = async (shaclStore: Store, options: Options = {}, frontendHelpersLocation: string): Promise<string> => {
+export const shaclToFrontendFile = async (shaclStore: Store, options: Options = {}, frontendHelpersLocation = 'https://deno.land/x/shacl_to_type/frontend-helpers.ts'): Promise<string> => {
   const { meta, otherMetas } = await getMetas(shaclStore, options)
   const types = template(meta, true) + (Object.keys(otherMetas).length ? '\n\n' + Object.values(otherMetas).map(otherMeta => template(otherMeta)).join('\n\n') : '')
   const query = "export const query = `\n" + createQuery(meta, options, otherMetas) + "`"

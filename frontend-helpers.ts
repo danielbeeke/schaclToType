@@ -1,4 +1,5 @@
-import { JsonLdContextNormalized } from 'https://esm.sh/jsonld-context-parser@2.2.1'
+
+import { JsonLdContextNormalized } from 'https://esm.sh/v95/jsonld-context-parser@2.2.1/es2022/jsonld-context-parser.js'
 
 export type RdfJsonTerm = {
   type: 'bnode' | 'uri' | 'literal' | 'defaultgraph',
@@ -58,20 +59,19 @@ export const responseToObjects = <Type>(results: RdfJsonRoot, prefixes: { [key: 
   return output
 }
 
-export const get = async (iris: Array<string>) => {
+export const getter = async <Type>(query: string, endpoint: string, iris: Array<string>, prefixes: { [key: string]: string }, meta: { [key: string]: { [key: string]: { singular: boolean, type: string } } }): Promise<Array<Type>> => {
   const values = iris.map(iri => `<${iri}>`)
-  /** @ts-ignore */
   const preparedQuery = query.replace('VALUES ?s { }', `VALUES ?s { ${values.join(' ')} }`)
 
   const body = new FormData()
   body.set('query', preparedQuery)
-  const response = await fetch('https://dbpedia.org/sparql', {
+  const response = await fetch(endpoint, {
     method: 'POST',
     headers: { accept: 'application/rdf+json' },
     body
   })
 
   const results = await response.json()
-  /** @ts-ignore */
-  return responseToObjects(results, prefixes, meta) //REPLACE WITH TYPE
+  return responseToObjects(results, prefixes, meta)
 }
+

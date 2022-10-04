@@ -1,6 +1,7 @@
 import { turtleToStore } from './helpers/turtleToStore.ts'
 import { shaclToFrontendFile } from './shaclToFrontendFile.ts'
 import { it, describe, assertEquals } from './deps.ts'
+import { get } from './test.ts'
 
 describe('shaclToFrontendFile', () => {
   it('converts a SHACL shape to a file that is consumable by a frontend', async () => {
@@ -13,9 +14,6 @@ describe('shaclToFrontendFile', () => {
     }, 'ts')
 
     Deno.writeTextFileSync('./src/test.ts', file)
-
-    const path = './test.ts'
-    const { get } = await import(path)
 
     const items = await get('https://dbpedia.org/sparql', [
       'http://dbpedia.org/resource/Søren_Kierkegaard', 

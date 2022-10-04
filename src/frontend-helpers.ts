@@ -14,12 +14,18 @@ export type RdfJsonRoot = {
   }
 }
 
+export type Meta =  { [key: string]: { [key: string]: { singular: boolean, type: string } } }
+
 export const castValue = (value: RdfJsonTerm, propertyConfig: { singular: boolean, type: string }) => {
   if (propertyConfig.type === 'Date') return new Date(value.value)
   return value.value
 }
 
-export const responseToObjects = <Type>(results: RdfJsonRoot, prefixes: { [key: string]: string }, meta: { [key: string]: { [key: string]: { singular: boolean, type: string } } }) => {
+export type Prefixes = { [key: string]: string }
+
+const subjectIRI = 'http://subject.com/subject'
+
+export const responseToObjects = <Type>(results: RdfJsonRoot, prefixes: Prefixes, meta: Meta) => {
   const context = new JsonLdContextNormalized(prefixes)
   const objects: Array<{ [key: string]: any }> = []
   const typePredicate = context.compactIri('http://www.w3.org/1999/02/22-rdf-syntax-ns#type', true)
@@ -32,7 +38,7 @@ export const responseToObjects = <Type>(results: RdfJsonRoot, prefixes: { [key: 
   for (const [uri, predicates] of Object.entries(results)) {
     const object = objects.find(object => object.id === uri)!
 
-    const type = predicates["http://www.w3.org/1999/02/22-rdf-syntax-ns#type"].find(item => item.value !== 'http://subject.com/subject')!.value
+    const type = predicates["http://www.w3.org/1999/02/22-rdf-syntax-ns#type"].find(item => item.value !== subjectIRI)!.value
     const compactedType = context.compactIri(type, true)
 
     for (const [predicate, values] of Object.entries(predicates)) {
@@ -49,17 +55,17 @@ export const responseToObjects = <Type>(results: RdfJsonRoot, prefixes: { [key: 
     }  
   }
 
-  const output = objects.filter(object => object[typePredicate]?.includes('http://subject.com/subject')) as unknown as Array<Type>
+  const output = objects.filter(object => object[typePredicate]?.includes(subjectIRI)) as unknown as Array<Type>
 
   for (const item of output) {
     /** @ts-ignore */
-    item[typePredicate] = item[typePredicate].filter(item => item !== 'http://subject.com/subject')
+    item[typePredicate] = item[typePredicate].filter(item => item !== subjectIRI)
   }
 
   return output
 }
 
-export const getter = async <Type>(query: string, endpoint: string, iris: Array<string>, prefixes: { [key: string]: string }, meta: { [key: string]: { [key: string]: { singular: boolean, type: string } } }): Promise<Array<Type>> => {
+export const getter = async <Type>(query: string, endpoint: string, iris: Array<string>, prefixes: Prefixes, meta: Meta): Promise<Array<Type>> => {
   const values = iris.map(iri => `<${iri}>`)
   const preparedQuery = query.replace('VALUES ?s { }', `VALUES ?s { ${values.join(' ')} }`)
 

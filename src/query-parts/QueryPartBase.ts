@@ -14,7 +14,7 @@ export class QueryPartBase {
   }
 
   queryPart (isConstruct = false, previousSubject?: string) {
-    const prefix = [previousSubject, this.property.name].filter(Boolean).join('_').replaceAll(':', '_')
+    const prefix = this.prefix(previousSubject)
     const compactedPredicate = this.options.context!.compactIri(this.property.predicate)
 
     const comment = `\n\t# ${prefix}\n`
@@ -34,5 +34,9 @@ export class QueryPartBase {
 
   where (previousSubject?: string) {
     return this.queryPart(false, previousSubject)
+  }
+
+  prefix (previousSubject?: string) {
+    return [previousSubject, this.property.name].filter(Boolean).join('_').replaceAll(':', '_')
   }
 }

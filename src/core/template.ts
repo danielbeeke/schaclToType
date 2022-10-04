@@ -1,4 +1,4 @@
-import { ObjectMeta } from './types.ts'
+import { ObjectMeta } from '../types.ts'
 
 export const template = (meta: ObjectMeta, defaultExport = false) => {
 

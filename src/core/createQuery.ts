@@ -1,7 +1,7 @@
-import { ObjectMeta, Options, PropertyMeta } from "./types.ts";
-import { LanguageAware } from './query-parts/LanguageAware.ts'
-import { QueryPartBase } from './query-parts/QueryPartBase.ts'
-import { Nested } from './query-parts/Nested.ts'
+import { ObjectMeta, Options } from '../types.ts'
+import { LanguageAware } from '../query-parts/LanguageAware.ts'
+import { QueryPartBase } from '../query-parts/QueryPartBase.ts'
+import { Nested } from '../query-parts/Nested.ts'
 
 export const createQueryParts = (meta: ObjectMeta, options: Options, nestedTypes: { [key: string]: ObjectMeta } = {}) => {
   return meta.properties!.map(property => {

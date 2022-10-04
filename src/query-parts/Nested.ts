@@ -1,11 +1,10 @@
 import { QueryPartBase } from './QueryPartBase.ts'
-import { createQueryParts } from '../createQuery.ts'
+import { createQueryParts } from '../core/createQuery.ts'
 
 export class Nested extends QueryPartBase {
 
   construct (previousSubject?: string) {
-    const prefix = [previousSubject, this.property.name].filter(Boolean).join('_').replaceAll(':', '_')
-
+    const prefix = this.prefix(previousSubject)
     const nestedType = this.nestedTypes[this.property.referencedTypes![0]]
     const queryParts = createQueryParts(nestedType, this.options, this.nestedTypes)
     const nestedWheres = queryParts.map(queryPart => queryPart.construct(this.property.name)).join('\n') as string
@@ -16,8 +15,7 @@ export class Nested extends QueryPartBase {
   }
 
   where (previousSubject?: string) {
-    const prefix = [previousSubject, this.property.name].filter(Boolean).join('_')
-
+    const prefix = this.prefix(previousSubject)
     const nestedType = this.nestedTypes[this.property.referencedTypes![0]]
     const queryParts = createQueryParts(nestedType, this.options, this.nestedTypes)
     const nestedWheres = queryParts.map(queryPart => queryPart.where(this.property.name)).join('\n') as string

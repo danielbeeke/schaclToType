@@ -1,6 +1,6 @@
 import { Store, JsonLdContextNormalized } from '../deps.ts'
 import { Options, ObjectMeta } from '../types.ts'
-import { indexation } from '../indexation.ts'
+import { indexation } from '../core/indexation.ts'
 
 export const getMetas = async (shaclStore: Store, options: Options = {}) => {
   options.context = new JsonLdContextNormalized(options.prefixes ?? {})

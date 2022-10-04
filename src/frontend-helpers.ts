@@ -14,7 +14,7 @@ export type RdfJsonRoot = {
   }
 }
 
-const castValue = (value: RdfJsonTerm, propertyConfig: { singular: boolean, type: string }) => {
+export const castValue = (value: RdfJsonTerm, propertyConfig: { singular: boolean, type: string }) => {
   if (propertyConfig.type === 'Date') return new Date(value.value)
   return value.value
 }
@@ -22,6 +22,7 @@ const castValue = (value: RdfJsonTerm, propertyConfig: { singular: boolean, type
 export const responseToObjects = <Type>(results: RdfJsonRoot, prefixes: { [key: string]: string }, meta: { [key: string]: { [key: string]: { singular: boolean, type: string } } }) => {
   const context = new JsonLdContextNormalized(prefixes)
   const objects: Array<{ [key: string]: any }> = []
+  const typePredicate = context.compactIri('http://www.w3.org/1999/02/22-rdf-syntax-ns#type', true)
 
   for (const uri of Object.keys(results)) {
     const object: { [key: string]: any } = { id: uri }
@@ -39,7 +40,7 @@ export const responseToObjects = <Type>(results: RdfJsonRoot, prefixes: { [key: 
       const propertyConfig = meta[compactedType][compactedPredicate]
  
       object[compactedPredicate] = propertyConfig.singular ? castValue(values[0], propertyConfig) : values.map(term => {
-        if (term.type === 'uri' && compactedPredicate !== 'type') {
+        if (term.type === 'uri' && compactedPredicate !== typePredicate) {
           const match = objects.find(object => object.id === term.value)
           if (match) return match
         }
@@ -48,10 +49,9 @@ export const responseToObjects = <Type>(results: RdfJsonRoot, prefixes: { [key: 
     }  
   }
 
-  const output = objects.filter(object => object['type']?.includes('http://subject.com/subject')) as unknown as Array<Type>
+  const output = objects.filter(object => object[typePredicate]?.includes('http://subject.com/subject')) as unknown as Array<Type>
 
   for (const item of output) {
-    const typePredicate = context.compactIri('http://www.w3.org/1999/02/22-rdf-syntax-ns#type', true)
     /** @ts-ignore */
     item[typePredicate] = item[typePredicate].filter(item => item !== 'http://subject.com/subject')
   }

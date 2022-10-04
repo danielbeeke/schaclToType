@@ -3,8 +3,7 @@ import { QueryPartBase } from './QueryPartBase.ts'
 export class LanguageAware extends QueryPartBase {
 
   where (previousSubject?: string) {
-    const prefix = [previousSubject, this.property.name].filter(Boolean).join('_').replaceAll(':', '_')
-
+    const prefix = this.prefix(previousSubject)
 return `\n\t# ${this.property.name}
 ${this.options.languages!.map(language => `\tOPTIONAL {
 \t\t?${previousSubject ?? 's'} ${this.options.context!.compactIri(this.property.predicate)} ?${prefix}_${language} .

@@ -1,6 +1,6 @@
 import { Options, PropertyMeta } from '../types.ts'
 import { Resource } from '../deps.ts'
-import { runPropertyRules } from '../indexation.ts'
+import { runPropertyRules } from '../core/indexation.ts'
 
 export default function (_values: Array<string>, meta: PropertyMeta, rawValues: Array<any>, options: Options) {
   for (const rawValue of rawValues) {

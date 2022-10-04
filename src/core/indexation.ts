@@ -1,23 +1,23 @@
-import { Store, RdfObjectLoader, JsonLdContextNormalized, Resource } from './deps.ts'
-import { ObjectMeta, Options, PropertyMeta } from './types.ts'
-import { prefixes } from './helpers/prefixes.ts'
+import { Store, RdfObjectLoader, Resource } from '../deps.ts'
+import { ObjectMeta, Options, PropertyMeta } from '../types.ts'
+import { prefixes } from '../helpers/prefixes.ts'
 
 // Rules
-import maxCount from './property-rules/maxCount.ts'
-import minCount from './property-rules/minCount.ts'
-import datatype from './property-rules/datatype.ts'
-import or from './property-rules/or.ts'
-import inRule from './property-rules/in.ts'
-import node from './property-rules/node.ts'
+import maxCountRule from '../property-rules/maxCount.ts'
+import minCountRule from '../property-rules/minCount.ts'
+import datatypeRule from '../property-rules/datatype.ts'
+import orRule from '../property-rules/or.ts'
+import inRule from '../property-rules/in.ts'
+import nodeRule from '../property-rules/node.ts'
 
 export const runPropertyRules = (rdfObject: Resource, meta: PropertyMeta, options: Options) => {
   const rules: { [key: string]: (values: Array<string>, meta: PropertyMeta, rawValues: Array<any>, options: Options) => any} = {
-    minCount,
-    maxCount,
-    datatype,
-    node,
+    'minCount': minCountRule,
+    'maxCount': maxCountRule,
+    'datatype': datatypeRule,
+    'node': nodeRule,
     'in': inRule,
-    or,
+    'or': orRule,
   }
 
   for (const [predicate, ruleHandler] of Object.entries(rules)) {
@@ -30,10 +30,6 @@ export const runPropertyRules = (rdfObject: Resource, meta: PropertyMeta, option
     }
   }
 }
-
-const predicateSkipList = [
-  // 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type'
-]
 
 export const indexation = async (shaclStore: Store, options: Options) => {
   const loader = new RdfObjectLoader({ context: prefixes })
@@ -52,8 +48,8 @@ export const indexation = async (shaclStore: Store, options: Options) => {
   }
 
   for (const shaclProperty of loader.resources[subject].properties['sh:property']) {
-    // if (predicateSkipList.includes(shaclProperty.property['sh:path']?.value)) continue
     const predicate = shaclProperty.property['sh:path']?.value
+
     const name = options.context!.compactIri(shaclProperty.property['sh:path']?.value ?? '', true)
     const predicateMeta: PropertyMeta = { name, predicate }
     meta.properties!.push(predicateMeta)

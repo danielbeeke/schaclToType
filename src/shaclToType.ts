@@ -1,6 +1,6 @@
 import { Store } from './deps.ts'
 import { Options } from './types.ts'
-import { template } from './template.ts'
+import { template } from './core/template.ts'
 import { getMetas } from './helpers/getMetas.ts'
 
 export const shaclToType = async (shaclStore: Store, options: Options = {}): Promise<string> => {

@@ -10,7 +10,9 @@ export type Person = {
   address?: Array<Address>
 }
 
+
 export type Address = {
+  'rdf:type': any,
   streetAddress: string,
   addressRegion: string,
   addressLocality: string,

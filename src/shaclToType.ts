@@ -1,13 +1,9 @@
 import { Store } from './deps.ts'
-import { ObjectMeta, Options } from './types.ts'
-import { indexation } from './indexation.ts'
+import { Options } from './types.ts'
 import { template } from './template.ts'
+import { getMetas } from './helpers/getMetas.ts'
 
 export const shaclToType = async (shaclStore: Store, options: Options = {}): Promise<string> => {
-  const meta: ObjectMeta = await indexation(shaclStore, options)
-
-  const otherTypes = await Promise.all(meta.properties!.flatMap(property => property.referencedTypes).filter(Boolean)
-  .map(shapeIri => shaclToType(shaclStore, Object.assign({ shapeIri }, options))))
-  
-  return template(meta) + (otherTypes.length ? '\n\n' + otherTypes.join('\n\n') : '')
+  const { meta, otherMetas } = await getMetas(shaclStore, options)
+  return template(meta) + (Object.keys(otherMetas).length ? '\n\n' + Object.values(otherMetas).map(otherMeta => template(otherMeta)).join('\n\n') : '')
 }

@@ -1,13 +1,16 @@
-import { ObjectMeta } from "./types.ts";
+import { ObjectMeta } from './types.ts'
 
-export const template = (meta: ObjectMeta) => {
+export const template = (meta: ObjectMeta, defaultExport = false) => {
 
   return `export type ${meta.name} = {
 ${meta.properties!.map(property => {
   const name = /\:|\-/g.test(property.name) ? `'${property.name}'` : property.name
-  const datatype = property.singular ? property.datatype ?? 'any' : `Array<${property.datatype ?? 'any'}>`
+  const type = property.singular ? property.datatype ?? 'any' : `Array<${property.datatype ?? 'any'}>`
 
-  return `  ${name}${property.required ? '' : '?'}: ${datatype}`
+  return `  ${name}${property.required ? '' : '?'}: ${type}`
 }).join(',\n')}
-}`
+}${defaultExport ? `
+export default ${meta.name}
+`: ''}
+`
 }

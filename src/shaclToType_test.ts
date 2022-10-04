@@ -1,6 +1,7 @@
 import { shaclToType } from './shaclToType.ts'
 import { turtleToStore } from './helpers/turtleToStore.ts'
 import { assertEquals, it, describe } from './deps.ts'
+import { prefixes } from './helpers/prefixes.ts'
 
 describe('shaclToType', () => {
   it('converts a SHACL shape to a TypeScript type', async () => {
@@ -12,10 +13,8 @@ describe('shaclToType', () => {
 
       const { store: shape } = await turtleToStore(fileData)
       const type = await shaclToType(shape, {
-        prefixes: {
-          '@vocab': 'https://schema.org/',
-          schema: 'https://schema.org/'
-        }
+        prefixes: Object.assign({ '@vocab': testShapeFile.name === 'Philosopher.ttl' ? prefixes.dbp : prefixes.schema }, prefixes),
+        nameCallback: (name: string) => name.replace('Shape', '') 
       })
 
       assertEquals(type, expectedType)

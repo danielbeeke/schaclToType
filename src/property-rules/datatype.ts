@@ -1,4 +1,4 @@
-import { PropertyMeta } from '../types.ts'
+import { Options, PropertyMeta } from '../types.ts'
 
 const datatypeMapping: { [key: string]: string } = {
   'http://www.w3.org/2001/XMLSchema#string': 'string',
@@ -7,7 +7,8 @@ const datatypeMapping: { [key: string]: string } = {
   'http://www.w3.org/2001/XMLSchema#integer': 'number'
 }
 
-export default function ([ value ]: Array<any>, meta: PropertyMeta) {
+export default function ([ value ]: Array<any>, meta: PropertyMeta, _rawValues: any, options: Options) {
+  meta.rdfType = options.context!.compactIri(value)
   meta.datatype = datatypeMapping[value]
 
   if (!meta.datatype && meta.referencedTypes?.length) 

@@ -1,4 +1,4 @@
-export type PersonShape = {
+export type Person = {
   givenName: string,
   familyName: string,
   callSign: Array<string>,
@@ -7,10 +7,10 @@ export type PersonShape = {
   abstract: Array<string>,
   birthDate?: Date,
   gender?: 'female' | 'male',
-  address?: Array<AddressShape>
+  address?: Array<Address>
 }
 
-export type AddressShape = {
+export type Address = {
   streetAddress: string,
   addressRegion: string,
   addressLocality: string,

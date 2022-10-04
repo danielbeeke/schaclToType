@@ -7,5 +7,9 @@ export const  prefixes = {
   'knows': 'foaf:knows',
   'name': 'foaf:name',
   'ex': 'http://example.org/',
-  'sh': 'http://www.w3.org/ns/shacl#'
+  'sh': 'http://www.w3.org/ns/shacl#',
+  'xsd': 'http://www.w3.org/2001/XMLSchema#',
+  'dbp': 'http://dbpedia.org/property/',
+  'dbo': 'http://dbpedia.org/ontology/',
+  'schema': 'https://schema.org/'
 }

@@ -20,6 +20,9 @@ CONSTRUCT {
 	# rdf_type
 	?s rdf:type ?rdf_type .
 
+	# dbo_wikiPageID
+	?s dbo:wikiPageID ?dbo_wikiPageID .
+
 	# alt
 	?s dbp:alt ?alt .
 
@@ -47,11 +50,15 @@ WHERE {
 		FILTER (lang(?name_nl) = 'nl')
 	}
 	BIND(COALESCE(?name_en, ?name_nl) as ?name)
+	FILTER(?name)
 
 
 	# rdf_type
 	?s rdf:type ?rdf_type .
 	FILTER (?rdf_type IN (<http://dbpedia.org/ontology/Philosopher>))
+
+	# dbo_wikiPageID
+	?s dbo:wikiPageID ?dbo_wikiPageID .
 
 	# alt
 	OPTIONAL {
@@ -63,6 +70,7 @@ WHERE {
 		FILTER (lang(?alt_nl) = 'nl')
 	}
 	BIND(COALESCE(?alt_en, ?alt_nl) as ?alt)
+
 
 
 	# birthPlace
@@ -82,6 +90,7 @@ WHERE {
 		FILTER (lang(?birthPlace_name_nl) = 'nl')
 	}
 	BIND(COALESCE(?birthPlace_name_en, ?birthPlace_name_nl) as ?birthPlace_name)
+	FILTER(?birthPlace_name)
 
 	}
 
@@ -94,9 +103,8 @@ describe('shaclToQuery', () => {
   it('converts a SHACL shape to a SPARQL query', async () => {
     const fileData = await Deno.readTextFile(`./shapes/Philosopher.ttl`)
     const { store: shape, prefixes } = await turtleToStore(fileData)
-    const context = Object.assign({ '@vocab': prefixes.dbp }, prefixes)
     const query = await shaclToQuery(shape, {
-      prefixes: context,
+      prefixes: Object.assign({ '@vocab': prefixes.dbp }, prefixes),
       languages: ['en', 'nl']
     })
 

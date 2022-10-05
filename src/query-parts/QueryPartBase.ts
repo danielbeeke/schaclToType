@@ -15,12 +15,11 @@ export class QueryPartBase {
 
   queryPart (isConstruct = false, previousSubject?: string) {
     const prefix = this.prefix(previousSubject)
-    const compactedPredicate = this.options.context!.compactIri(this.property.predicate)
 
     const comment = `\n\t# ${prefix}\n`
-    let inner = `\t?${previousSubject ?? 's'} ${compactedPredicate} ?${prefix} .`
+    let inner = `\t?${previousSubject ?? 's'} ${this.property.compacted} ?${prefix} .`
 
-    if (compactedPredicate === 'rdf:type' && !isConstruct) {
+    if (this.property.predicate === 'http://www.w3.org/1999/02/22-rdf-syntax-ns#type' && !isConstruct) {
       inner += `\n\tFILTER (?${prefix} IN (<${this.meta.type}>))`
     }
 

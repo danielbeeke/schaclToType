@@ -14,6 +14,7 @@ export const createQueryParts = (meta: ObjectMeta, options: Options, nestedTypes
 export const createQuery = (meta: ObjectMeta, options: Options, nestedTypes: { [key: string]: ObjectMeta } = {}) => {
   const queryParts = createQueryParts(meta, options, nestedTypes)
   const prefixes = Object.entries(options.context!.getContextRaw())
+    .filter(([_alias, uri]) => uri.includes('://'))
     .map(([alias, uri]) => alias[0] === '@' ? '' : `PREFIX ${alias}: <${uri}>`).filter(Boolean).join('\n')
 
 return `${prefixes}

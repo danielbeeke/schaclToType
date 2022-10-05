@@ -10,7 +10,7 @@ export class Nested extends QueryPartBase {
     const nestedWheres = queryParts.map(queryPart => queryPart.construct(this.property.name)).join('\n') as string
 
     const comment = `\n\t# ${prefix}\n`
-    const inner = `\t?${previousSubject ?? 's'} ${this.options.context!.compactIri(this.property.predicate)} ?${prefix} .`
+    const inner = `\t?${previousSubject ?? 's'} ${this.property.compacted} ?${prefix} .`
     return comment + inner + nestedWheres
   }
 
@@ -21,7 +21,7 @@ export class Nested extends QueryPartBase {
     const nestedWheres = queryParts.map(queryPart => queryPart.where(this.property.name)).join('\n') as string
 
     const comment = `\n\t# ${prefix}\n`
-    const inner = `\t?${previousSubject ?? 's'} ${this.options.context!.compactIri(this.property.predicate)} ?${prefix} .`
+    const inner = `\t?${previousSubject ?? 's'} ${this.property.compacted} ?${prefix} .`
     if (this.property.required) return comment + inner + nestedWheres
     return comment + `\tOPTIONAL {\n\t${inner + nestedWheres}\n\t}`
   }

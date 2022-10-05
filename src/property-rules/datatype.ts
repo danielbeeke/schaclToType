@@ -8,7 +8,7 @@ const datatypeMapping: { [key: string]: string } = {
 }
 
 export default function ([ value ]: Array<any>, meta: PropertyMeta, _rawValues: any, options: Options) {
-  meta.rdfType = options.context!.compactIri(value)
+  meta.rdfType = options.context!.compactIri(value, true)
   meta.datatype = datatypeMapping[value]
 
   if (!meta.datatype && meta.referencedTypes?.length) 

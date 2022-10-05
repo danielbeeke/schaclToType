@@ -50,8 +50,18 @@ export const indexation = async (shaclStore: Store, options: Options) => {
   for (const shaclProperty of loader.resources[subject].properties['sh:property']) {
     const predicate = shaclProperty.property['sh:path']?.value
 
-    const name = options.context!.compactIri(shaclProperty.property['sh:path']?.value ?? '', true)
-    const predicateMeta: PropertyMeta = { name, predicate }
+    const propertyIri = shaclProperty.property['sh:path']?.value
+    const propertyName = options.context!.compactIri(propertyIri, true)
+    const propertyNameCompacted = options.context!.compactIri(propertyIri)
+
+    const typeName = propertyName === 'a' ? 'type' : propertyName
+
+    const predicateMeta: PropertyMeta = { 
+      name: propertyName, 
+      predicate, 
+      typeName,
+      compacted: propertyNameCompacted 
+    }
     meta.properties!.push(predicateMeta)
 
     runPropertyRules(shaclProperty, predicateMeta, options)

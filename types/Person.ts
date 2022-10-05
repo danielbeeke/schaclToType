@@ -12,7 +12,7 @@ export type Person = {
 
 
 export type Address = {
-  'rdf:type': any,
+  type: any,
   streetAddress: string,
   addressRegion: string,
   addressLocality: string,

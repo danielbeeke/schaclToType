@@ -6,10 +6,11 @@ export class LanguageAware extends QueryPartBase {
     const prefix = this.prefix(previousSubject)
 return `\n\t# ${this.property.name}
 ${this.options.languages!.map(language => `\tOPTIONAL {
-\t\t?${previousSubject ?? 's'} ${this.options.context!.compactIri(this.property.predicate)} ?${prefix}_${language} .
+\t\t?${previousSubject ?? 's'} ${this.property.compacted} ?${prefix}_${language} .
 \t\tFILTER (lang(?${prefix}_${language}) = '${language}')
 \t}`).join('\n')}
 \tBIND(COALESCE(${this.options.languages!.map(language => `?${prefix}_${language}`).join(', ')}) as ?${prefix})
+${this.property.required ? `\tFILTER(?${prefix})` : ''}
 `
   }
 }

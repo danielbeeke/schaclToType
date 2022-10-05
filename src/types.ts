@@ -18,12 +18,14 @@ export type ObjectMeta = {
 
 export type PropertyMeta = {
   name: string,
+  typeName: string,
   predicate: string,
   singular?: boolean,
   required?: boolean,
   referencedTypes?: Array<string>,
   datatype?: string,
   rdfType?: string
+  compacted: string
 }
 
 export type RdfJsonTerm = {

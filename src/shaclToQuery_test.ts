@@ -14,8 +14,8 @@ CONSTRUCT {
 	?s a <http://subject.com/subject> .
 
 
-	# name
-	?s dbp:name ?name .
+	# rdfs_label
+	?s rdfs:label ?rdfs_label .
 
 	# rdf_type
 	?s rdf:type ?rdf_type .
@@ -40,17 +40,17 @@ CONSTRUCT {
 WHERE {
 	VALUES ?s { }
 
-	# name
+	# rdfs:label
 	OPTIONAL {
-		?s dbp:name ?name_en .
-		FILTER (lang(?name_en) = 'en')
+		?s rdfs:label ?rdfs_label_en .
+		FILTER (lang(?rdfs_label_en) = 'en')
 	}
 	OPTIONAL {
-		?s dbp:name ?name_nl .
-		FILTER (lang(?name_nl) = 'nl')
+		?s rdfs:label ?rdfs_label_nl .
+		FILTER (lang(?rdfs_label_nl) = 'nl')
 	}
-	BIND(COALESCE(?name_en, ?name_nl) as ?name)
-	FILTER(?name)
+	BIND(COALESCE(?rdfs_label_en, ?rdfs_label_nl) as ?rdfs_label)
+	FILTER(?rdfs_label)
 
 
 	# rdf_type

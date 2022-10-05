@@ -52,7 +52,7 @@ export const indexation = async (shaclStore: Store, options: Options) => {
 
     const propertyIri = shaclProperty.property['sh:path']?.value
     const propertyName = options.context!.compactIri(propertyIri, true)
-    const propertyNameCompacted = options.context!.compactIri(propertyIri)
+    const propertyNameCompacted = options.context!.compactIri(propertyIri).includes(':') ? options.context!.compactIri(propertyIri) : `<${propertyIri}>`
 
     const typeName = propertyName === 'a' ? 'type' : propertyName
 

@@ -6,6 +6,7 @@ import { createQuery } from './core/createQuery.ts'
 
 export const shaclToFrontendFile = async (shaclStore: Store, options: Options = {}): Promise<string> => {
   const { meta, otherMetas } = await getMetas(shaclStore, options)
+  // console.log(meta)
   const types = template(meta, true) + (Object.keys(otherMetas).length ? '\n\n' + Object.values(otherMetas).map(otherMeta => template(otherMeta)).join('\n\n') : '')
   const query = "export const query = `\n" + createQuery(meta, options, otherMetas) + "`"
   const allMetas = { [meta.type]: meta, ...otherMetas }

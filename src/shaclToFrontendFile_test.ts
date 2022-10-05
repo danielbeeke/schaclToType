@@ -24,8 +24,9 @@ describe('shaclToFrontendFile', () => {
       'http://dbpedia.org/resource/Immanuel_Kant'
     ]) as any
 
-    assertEquals(items[0].name, 'Immanuel Kant')
-    assertEquals(items[1].name, 'Søren Kierkegaard')
+
+    assertEquals(items[0].label, 'Immanuel Kant')
+    assertEquals(items[1].label, 'Søren Kierkegaard')
     assertEquals(items[1].birthPlace?.[0].name, 'Copenhagen')
     assertEquals(items[1].birthDate instanceof Date, true)
   })

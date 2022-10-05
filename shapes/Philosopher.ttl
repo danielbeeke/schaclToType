@@ -11,7 +11,7 @@ dbp:Philosopher
     sh:targetClass <http://dbpedia.org/ontology/Philosopher> ;
 
     sh:property [
-        sh:path dbp:name ;
+        sh:path rdfs:label ;
         sh:datatype rdf:langString ;
         sh:minCount 1 ;
         sh:maxCount 1 ;

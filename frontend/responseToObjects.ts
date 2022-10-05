@@ -1,12 +1,10 @@
 import { Context } from './Context.ts'
-import { Prefixes, RdfJsonRoot, Meta } from './types.ts'
+import { RdfJsonRoot, Meta } from './types.ts'
 import { castValue } from './castValue.ts'
 
 const subjectIRI = 'http://subject.com/subject'
 
-export const responseToObjects = <Type>(results: RdfJsonRoot, prefixes: Prefixes, meta: Meta) => {
-  const context = new Context(prefixes)
-
+export const responseToObjects = <Type>(results: RdfJsonRoot, context: Context, meta: Meta) => {
   const objects: Array<{ [key: string]: any }> = []
   const typePredicate = context.compactIri('http://www.w3.org/1999/02/22-rdf-syntax-ns#type')
 

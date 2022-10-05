@@ -7,6 +7,7 @@ export class Context {
     this.#jsonLdContext = jsonLdContext
     
     for (const [key, value] of Object.entries(jsonLdContext)) {
+      if (key === '@vocab') continue
       this.#jsonLdContextInverted[value] = key
     }
   }

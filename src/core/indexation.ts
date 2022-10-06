@@ -38,7 +38,9 @@ export const indexation = async (shaclStore: Store, options: Options) => {
 
   const name = subject.split(/\#|\//g).pop()!
 
-  const type = loader.resources[subject].property['sh:targetClass'].term.value
+  const type = loader.resources[subject].property['sh:targetClass']?.term.value
+
+  if (!type) throw new Error('No targetClass found')
 
   const meta: ObjectMeta = {
     name: options.nameCallback ? options.nameCallback(name) : name,
@@ -54,7 +56,7 @@ export const indexation = async (shaclStore: Store, options: Options) => {
     const propertyName = options.context!.compactIri(propertyIri, true)
     const propertyNameCompacted = options.context!.compactIri(propertyIri).includes(':') ? options.context!.compactIri(propertyIri) : `<${propertyIri}>`
 
-    const typeName = propertyName === 'a' ? 'type' : propertyName
+    const typeName = propertyName
 
     const predicateMeta: PropertyMeta = { 
       name: propertyName, 

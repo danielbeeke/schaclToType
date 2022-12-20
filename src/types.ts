@@ -1,31 +1,32 @@
-import { JsonLdContextNormalized } from './deps.ts'
+import { Context } from "./Context/Context.ts"
+import { Store, RdfObjectLoader } from './deps.ts'
 
-export type Options = {
-  // @see https://www.w3.org/TR/json-ld/#context-definitions
+export type IndexationOptions = {
   prefixes?: { [key: string]: string }
   shapeIri?: string,
-  context?: JsonLdContextNormalized,
-  nameCallback?: (name: string) => string,
-  languages?: Array<string>,
+  context?: Context,
+  shaclStore: Store,
+  objectMeta?: ObjectMeta,
+  loader?: RdfObjectLoader
 }
 
 export type ObjectMeta = {
-  name: string,
-  type: string,
-  subject: string,
-  properties?: Array<PropertyMeta>
+  targetClass?: string,
+  shapeIri: string,
+  properties?: Array<PropertyMeta>,
+  nestedMetas?: Array<ObjectMeta>
 }
 
 export type PropertyMeta = {
-  name: string,
-  typeName: string,
   predicate: string,
+  compacted: string,
   singular?: boolean,
+  alias?: string,
+  expandAll?: boolean,
   required?: boolean,
-  referencedTypes?: Array<string>,
-  datatype?: string,
-  rdfType?: string
-  compacted: string
+  typeScriptType?: string,
+  rdfType?: string,
+  children?: ObjectMeta
 }
 
 export type RdfJsonTerm = {
@@ -36,7 +37,14 @@ export type RdfJsonTerm = {
 }
 
 export type RdfJsonRoot = {
-  [key: string]: {
-    [key: string]: Array<RdfJsonTerm>
-  }
+  [key: string]: RdfJsonNode
+}
+
+export type RdfJsonNode = {
+  [key: string]: Array<RdfJsonTerm  | RdfJsonNode>
+}
+
+export type QueryOptions = {
+  iris: Array<string>,
+  languages: Array<string>
 }

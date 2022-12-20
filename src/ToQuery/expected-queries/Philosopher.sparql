@@ -1,0 +1,82 @@
+BASE <http://dbpedia.org/property/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX sh: <http://www.w3.org/ns/shacl#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX dbp: <http://dbpedia.org/property/>
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX ex: <http://example.com/>
+
+CONSTRUCT {
+  ?s rdfs:label ?rdfslabel .
+  ?s rdf:type ?rdftype .
+  ?s dbo:wikiPageID ?dbowikiPageID .
+  ?s <alt> ?alt .
+  ?s <birthPlace> ?birthPlace .
+  ?birthPlace rdf:type ?birthPlace_rdftype .
+  ?birthPlace <name> ?birthPlace_name .
+  ?s <birthDate> ?birthDate .
+}
+WHERE {
+
+{
+VALUES ?s { <http://dbpedia.org/resource/Søren_Kierkegaard> }
+
+  OPTIONAL {?s rdfs:label ?rdfslabel_en .
+  FILTER (lang(?rdfslabel_en) = 'en') }
+  OPTIONAL {?s rdfs:label ?rdfslabel_nl .
+  FILTER (lang(?rdfslabel_nl) = 'nl') }
+  BIND(COALESCE(?rdfslabel_en, ?rdfslabel_nl) as ?rdfslabel)
+
+} UNION
+
+{
+VALUES ?s { <http://dbpedia.org/resource/Søren_Kierkegaard> }
+
+  ?s rdf:type ?rdftype .
+  FILTER(?rdftype = <http://dbpedia.org/ontology/Philosopher>)
+
+} UNION
+
+{
+VALUES ?s { <http://dbpedia.org/resource/Søren_Kierkegaard> }
+
+  ?s dbo:wikiPageID ?dbowikiPageID .
+
+} UNION
+
+{
+VALUES ?s { <http://dbpedia.org/resource/Søren_Kierkegaard> }
+
+  OPTIONAL {?s <alt> ?alt_en .
+  FILTER (lang(?alt_en) = 'en') }
+  OPTIONAL {?s <alt> ?alt_nl .
+  FILTER (lang(?alt_nl) = 'nl') }
+  BIND(COALESCE(?alt_en, ?alt_nl) as ?alt)
+
+} UNION
+
+{
+VALUES ?s { <http://dbpedia.org/resource/Søren_Kierkegaard> }
+
+  OPTIONAL {
+    ?s <birthPlace> ?birthPlace .
+    ?birthPlace rdf:type ?birthPlace_rdftype .
+    FILTER(?birthPlace_rdftype = <http://dbpedia.org/ontology/Location>)
+    OPTIONAL {?birthPlace <name> ?birthPlace_name_en .
+    FILTER (lang(?birthPlace_name_en) = 'en') }
+    OPTIONAL {?birthPlace <name> ?birthPlace_name_nl .
+    FILTER (lang(?birthPlace_name_nl) = 'nl') }
+    BIND(COALESCE(?birthPlace_name_en, ?birthPlace_name_nl) as ?birthPlace_name)
+  }
+
+} UNION
+
+{
+VALUES ?s { <http://dbpedia.org/resource/Søren_Kierkegaard> }
+
+  ?s <birthDate> ?birthDate .
+
+}
+
+}

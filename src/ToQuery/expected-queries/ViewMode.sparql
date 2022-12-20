@@ -1,0 +1,59 @@
+BASE <http://viewmode.danielbeeke.nl/>
+PREFIX schema: <https://schema.org/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX sh: <http://www.w3.org/ns/shacl#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX vm: <http://viewmode.danielbeeke.nl/>
+PREFIX shsh: <http://www.w3.org/ns/shacl-shacl#>
+
+CONSTRUCT {
+  ?s rdf:type ?rdftype .
+  ?s <name> ?name .
+  ?s <targetClass> ?targetClass .
+  ?s <property> ?property .
+  ?property <widget> ?property_widget .
+  ?property <path> ?property_path .
+  ?property <widgetConfiguration> ?property_widgetConfiguration .
+  ?property_widgetConfiguration <key> ?property_widgetConfiguration_key .
+  ?property_widgetConfiguration <value> ?property_widgetConfiguration_value .
+}
+WHERE {
+
+{
+VALUES ?s { <https://rdf.mediaworks.global/viewmodes/video-card> }
+
+  ?s rdf:type ?rdftype .
+  FILTER(?rdftype = <http://viewmode.danielbeeke.nl/ViewMode>)
+
+} UNION
+
+{
+VALUES ?s { <https://rdf.mediaworks.global/viewmodes/video-card> }
+
+  ?s <name> ?name .
+
+} UNION
+
+{
+VALUES ?s { <https://rdf.mediaworks.global/viewmodes/video-card> }
+
+  ?s <targetClass> ?targetClass .
+
+} UNION
+
+{
+VALUES ?s { <https://rdf.mediaworks.global/viewmodes/video-card> }
+
+  ?s <property> ?property .
+    ?property <widget> ?property_widget .
+    ?property <path> ?property_path .
+    OPTIONAL {
+        ?property <widgetConfiguration> ?property_widgetConfiguration .
+      ?property_widgetConfiguration <key> ?property_widgetConfiguration_key .
+      ?property_widgetConfiguration <value> ?property_widgetConfiguration_value .
+    }
+
+}
+
+}

@@ -4,8 +4,9 @@
 @prefix schema: <https://schema.org/> .
 @prefix sh: <http://www.w3.org/ns/shacl#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix ex: <http://example.com/> .
 
-schema:PersonShape
+ex:PersonShape
     a sh:NodeShape ;
 
     sh:targetClass schema:Person ;
@@ -33,6 +34,7 @@ schema:PersonShape
         sh:order 2 ;
         sh:datatype rdf:langString ;
         sh:minCount 1 ;
+        sh:maxCount 1 ;
     ] ;
 
     sh:property [
@@ -45,6 +47,7 @@ schema:PersonShape
         sh:order 2 ;
         sh:datatype xsd:string ;
         sh:minCount 1 ;
+        sh:maxCount 1 ;
     ] ;
 
     sh:property [
@@ -67,7 +70,7 @@ schema:PersonShape
     ] ;
     sh:property [
         sh:path schema:address ;
-        sh:node schema:AddressShape ;
+        sh:node ex:AddressShape ;
     ] .
 
 schema:TopGroup
@@ -78,7 +81,7 @@ schema:NameGroup
 	a sh:PropertyGroup ;
 	sh:order 2 .
 
-schema:AddressShape
+ex:AddressShape
     a sh:NodeShape ;
     sh:targetClass schema:PostalAddress ;
     sh:closed true ;

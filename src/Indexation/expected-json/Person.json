@@ -1,0 +1,125 @@
+{
+  "targetClass": "https://schema.org/Person",
+  "shapeIri": "http://example.com/PersonShape",
+  "properties": [
+    {
+      "predicate": "https://schema.org/givenName",
+      "compacted": "schema:givenName",
+      "required": true,
+      "singular": true,
+      "typeScriptType": "string",
+      "rdfType": "http://www.w3.org/2001/XMLSchema#string"
+    },
+    {
+      "predicate": "https://schema.org/familyName",
+      "compacted": "schema:familyName",
+      "required": true,
+      "singular": true,
+      "rdfType": "http://www.w3.org/2001/XMLSchema#string",
+      "typeScriptType": "string"
+    },
+    {
+      "predicate": "https://schema.org/callSign",
+      "compacted": "schema:callSign",
+      "required": true,
+      "singular": true,
+      "rdfType": "http://www.w3.org/1999/02/22-rdf-syntax-ns#langString",
+      "typeScriptType": "string"
+    },
+    {
+      "predicate": "https://schema.org/colleague",
+      "compacted": "schema:colleague",
+      "rdfType": "http://www.w3.org/2001/XMLSchema#string"
+    },
+    {
+      "predicate": "https://schema.org/description",
+      "compacted": "schema:description",
+      "required": true,
+      "singular": true,
+      "rdfType": "http://www.w3.org/2001/XMLSchema#string",
+      "typeScriptType": "string"
+    },
+    {
+      "predicate": "https://schema.org/abstract",
+      "compacted": "schema:abstract",
+      "required": true,
+      "rdfType": "http://www.w3.org/2001/XMLSchema#string",
+      "typeScriptType": "Array<string>"
+    },
+    {
+      "predicate": "https://schema.org/birthDate",
+      "compacted": "schema:birthDate",
+      "singular": true,
+      "rdfType": "http://www.w3.org/2001/XMLSchema#date",
+      "typeScriptType": "Date"
+    },
+    {
+      "predicate": "https://schema.org/gender",
+      "compacted": "schema:gender",
+      "singular": true,
+      "typeScriptType": "'female' | 'male'",
+      "rdfType": "http://www.w3.org/2001/XMLSchema#string"
+    },
+    {
+      "predicate": "https://schema.org/address",
+      "compacted": "schema:address",
+      "rdfType": "http://example.com/AddressShape"
+    }
+  ],
+  "nestedMetas": [
+    {
+      "shapeIri": "http://example.com/AddressShape",
+      "targetClass": "https://schema.org/PostalAddress",
+      "properties": [
+        {
+          "predicate": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+          "compacted": "type",
+          "required": true,
+          "singular": true,
+          "rdfType": "http://www.w3.org/2001/XMLSchema#string",
+          "typeScriptType": "string"
+        },
+        {
+          "predicate": "https://schema.org/streetAddress",
+          "compacted": "schema:streetAddress",
+          "required": true,
+          "singular": true,
+          "rdfType": "http://www.w3.org/2001/XMLSchema#string",
+          "typeScriptType": "string"
+        },
+        {
+          "predicate": "https://schema.org/addressRegion",
+          "compacted": "schema:addressRegion",
+          "required": true,
+          "singular": true,
+          "rdfType": "http://www.w3.org/2001/XMLSchema#string",
+          "typeScriptType": "string"
+        },
+        {
+          "predicate": "https://schema.org/addressLocality",
+          "compacted": "schema:addressLocality",
+          "required": true,
+          "singular": true,
+          "rdfType": "http://www.w3.org/2001/XMLSchema#string",
+          "typeScriptType": "string"
+        },
+        {
+          "predicate": "https://schema.org/postalCode",
+          "compacted": "schema:postalCode",
+          "required": true,
+          "singular": true,
+          "typeScriptType": "string | number",
+          "rdfType": "http://www.w3.org/2001/XMLSchema#string"
+        },
+        {
+          "predicate": "https://schema.org/addressCountry",
+          "compacted": "schema:addressCountry",
+          "required": true,
+          "singular": true,
+          "rdfType": "http://www.w3.org/2001/XMLSchema#string",
+          "typeScriptType": "string"
+        }
+      ]
+    }
+  ]
+}

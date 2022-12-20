@@ -1,0 +1,72 @@
+{
+  "targetClass": "http://dbpedia.org/ontology/Philosopher",
+  "shapeIri": "http://example.com/PhilosopherShape",
+  "properties": [
+    {
+      "predicate": "http://www.w3.org/2000/01/rdf-schema#label",
+      "compacted": "label",
+      "required": true,
+      "singular": true,
+      "rdfType": "http://www.w3.org/1999/02/22-rdf-syntax-ns#langString",
+      "typeScriptType": "string"
+    },
+    {
+      "predicate": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+      "compacted": "type",
+      "required": true,
+      "singular": true,
+      "rdfType": "http://www.w3.org/2001/XMLSchema#string",
+      "typeScriptType": "string"
+    },
+    {
+      "predicate": "http://dbpedia.org/ontology/wikiPageID",
+      "compacted": "dbo:wikiPageID",
+      "required": true,
+      "singular": true,
+      "rdfType": "http://www.w3.org/2001/XMLSchema#integer",
+      "typeScriptType": "number"
+    },
+    {
+      "predicate": "http://dbpedia.org/property/alt",
+      "compacted": "dbp:alt",
+      "rdfType": "http://www.w3.org/1999/02/22-rdf-syntax-ns#langString",
+      "typeScriptType": "Array<string>"
+    },
+    {
+      "predicate": "http://dbpedia.org/property/birthPlace",
+      "compacted": "dbp:birthPlace",
+      "rdfType": "http://example.com/LocationShape"
+    },
+    {
+      "predicate": "http://dbpedia.org/property/birthDate",
+      "compacted": "dbp:birthDate",
+      "required": true,
+      "singular": true,
+      "rdfType": "http://www.w3.org/2001/XMLSchema#date",
+      "typeScriptType": "Date"
+    }
+  ],
+  "nestedMetas": [
+    {
+      "shapeIri": "http://example.com/LocationShape",
+      "targetClass": "http://dbpedia.org/ontology/Location",
+      "properties": [
+        {
+          "predicate": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+          "compacted": "type",
+          "required": true,
+          "rdfType": "http://www.w3.org/2001/XMLSchema#string"
+        },
+        {
+          "alias": "http://www.w3.org/2000/01/rdf-schema#label",
+          "predicate": "http://dbpedia.org/property/name",
+          "compacted": "dbp:name",
+          "required": true,
+          "singular": true,
+          "rdfType": "http://www.w3.org/1999/02/22-rdf-syntax-ns#langString",
+          "typeScriptType": "string"
+        }
+      ]
+    }
+  ]
+}

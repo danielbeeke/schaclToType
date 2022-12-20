@@ -1,0 +1,84 @@
+{
+  "targetClass": "http://viewmode.danielbeeke.nl/ViewMode",
+  "shapeIri": "http://viewmode.danielbeeke.nl/ViewModeShape",
+  "properties": [
+    {
+      "predicate": "http://www.w3.org/1999/02/22-rdf-syntax-ns#type",
+      "compacted": "type",
+      "singular": true,
+      "required": true,
+      "rdfType": "http://www.w3.org/2001/XMLSchema#string",
+      "typeScriptType": "string"
+    },
+    {
+      "predicate": "http://viewmode.danielbeeke.nl/name",
+      "compacted": "vm:name",
+      "required": true,
+      "singular": true,
+      "rdfType": "http://www.w3.org/2001/XMLSchema#string",
+      "typeScriptType": "string"
+    },
+    {
+      "predicate": "http://viewmode.danielbeeke.nl/targetClass",
+      "compacted": "vm:targetClass",
+      "required": true,
+      "singular": true,
+      "rdfType": "http://www.w3.org/2001/XMLSchema#string",
+      "typeScriptType": "string"
+    },
+    {
+      "predicate": "http://viewmode.danielbeeke.nl/property",
+      "compacted": "vm:property",
+      "required": true,
+      "children": {
+        "shapeIri": "http://www.w3.org/ns/shacl#PropertyShape",
+        "properties": [
+          {
+            "predicate": "http://viewmode.danielbeeke.nl/widget",
+            "compacted": "vm:widget",
+            "required": true,
+            "singular": true,
+            "rdfType": "http://www.w3.org/1999/02/22-rdf-syntax-ns#string",
+            "typeScriptType": "string"
+          },
+          {
+            "predicate": "http://viewmode.danielbeeke.nl/path",
+            "compacted": "vm:path",
+            "required": true,
+            "singular": true,
+            "rdfType": "http://www.w3.org/2001/XMLSchema#string",
+            "typeScriptType": "string"
+          },
+          {
+            "predicate": "http://viewmode.danielbeeke.nl/widgetConfiguration",
+            "compacted": "vm:widgetConfiguration",
+            "children": {
+              "shapeIri": "http://www.w3.org/ns/shacl#WidgetConfigurationShape",
+              "properties": [
+                {
+                  "predicate": "http://viewmode.danielbeeke.nl/key",
+                  "compacted": "vm:key",
+                  "required": true,
+                  "singular": true,
+                  "rdfType": "http://www.w3.org/1999/02/22-rdf-syntax-ns#string",
+                  "typeScriptType": "string"
+                },
+                {
+                  "predicate": "http://viewmode.danielbeeke.nl/value",
+                  "compacted": "vm:value",
+                  "required": true,
+                  "singular": true,
+                  "rdfType": "http://www.w3.org/2001/XMLSchema#string",
+                  "typeScriptType": "string"
+                }
+              ]
+            },
+            "rdfType": "http://www.w3.org/ns/shacl#WidgetConfigurationShape"
+          }
+        ]
+      },
+      "rdfType": "http://www.w3.org/ns/shacl#PropertyShape"
+    }
+  ],
+  "nestedMetas": []
+}

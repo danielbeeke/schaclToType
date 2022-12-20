@@ -1,5 +1,0 @@
-{
-  "tasks": {
-    "build-helper": "deno run --allow-all scripts/build-helper.ts"
-  }
-}

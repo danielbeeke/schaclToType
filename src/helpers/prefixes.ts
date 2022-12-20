@@ -9,6 +9,9 @@ export const  prefixes = {
   'dbo': 'http://dbpedia.org/ontology/',
   'dbr': 'http://dbpedia.org/resource/',
   'schema': 'https://schema.org/',
-  'a': 'rdf:type',
+  'vm': 'http://viewmode.danielbeeke.nl/',
+  'sht': 'https://github.com/danielbeeke/shaclToType/',
+  'type': 'rdf:type',
   'label': 'rdfs:label',
+  'name': 'foaf:name',
 }

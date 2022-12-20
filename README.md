@@ -1,7 +1,8 @@
 # SHACL to Type
 
-This module exports three functions:
+This module exports the following functions:
 
-- shaclToType, exports TypeScripts types for a SHACL file
-- shaclToQuery, exports a SPARQL query for a SHACL file
-- shaclToFrontendFile, exports a file that can be consumed by a frontend
+- indexation, exports meta for a SHACL file
+- ToType, exports TypeScripts types for a SHACL file
+- createConstructQuery, exports a SPARQL query for a SHACL file
+- ToFile, exports a file that can be consumed by a frontend

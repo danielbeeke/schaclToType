@@ -1,0 +1,11 @@
+{
+  "name": "@lightnet/shacl-to-type",
+  "version": "0.0.1",
+  "type": "module",
+  "private": true,
+  "exports": {
+    ".": "./mod.ts",
+    "./context": "./src/Context/Context.js",
+    "./to-query": "./src/ToQuery/ToQuery.js"
+  }
+}

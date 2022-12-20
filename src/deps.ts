@@ -5,3 +5,4 @@ export { beforeAll, afterAll, it, describe } from 'https://deno.land/std@0.152.0
 export { RdfObjectLoader } from 'https://esm.sh/rdf-object@1.13.1'
 export type { Resource } from 'https://esm.sh/rdf-object@1.13.1'
 export { JsonLdContextNormalized } from 'https://esm.sh/jsonld-context-parser@2.2.1'
+export { ensureDir } from 'https://deno.land/std@0.152.0/fs/mod.ts'

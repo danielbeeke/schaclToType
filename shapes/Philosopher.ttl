@@ -4,8 +4,10 @@
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix dbp: <http://dbpedia.org/property/> .
 @prefix dbo: <http://dbpedia.org/ontology/> .
+@prefix ex: <http://example.com/> .
+@prefix sht: <https://github.com/danielbeeke/shaclToType/> .
 
-dbp:Philosopher
+ex:PhilosopherShape
     a sh:NodeShape ;
 
     sh:targetClass <http://dbpedia.org/ontology/Philosopher> ;
@@ -20,6 +22,7 @@ dbp:Philosopher
     sh:property [
         sh:path rdf:type ;
         sh:minCount 1 ;
+        sh:maxCount 1 ;
     ] ;
 
     sh:property [
@@ -29,7 +32,6 @@ dbp:Philosopher
         sh:datatype xsd:integer ;
     ] ;
 
-
     sh:property [
         sh:path dbp:alt  ;
         sh:datatype rdf:langString ;
@@ -37,7 +39,7 @@ dbp:Philosopher
 
     sh:property [
         sh:path dbp:birthPlace ;
-        sh:node dbo:Location ;
+        sh:node ex:LocationShape ;
     ] ;
 
     sh:property [
@@ -47,18 +49,19 @@ dbp:Philosopher
         sh:maxCount 1 ;
     ] .
 
-dbo:Location
+ex:LocationShape
     a sh:NodeShape ;
+
+    sh:targetClass <http://dbpedia.org/ontology/Location> ;
 
     sh:property [
         sh:path rdf:type ;
         sh:minCount 1 ;
     ] ;
 
-    sh:targetClass <http://dbpedia.org/ontology/Location> ;
-
     sh:property [
         sh:path dbp:name ;
+        sht:alias rdfs:label ;
         sh:datatype rdf:langString ;
         sh:minCount 1 ;
         sh:maxCount 1 ;

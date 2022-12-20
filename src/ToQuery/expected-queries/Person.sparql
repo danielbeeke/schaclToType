@@ -1,0 +1,112 @@
+BASE <https://schema.org/>
+PREFIX dash: <http://datashapes.org/dash#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX schema: <https://schema.org/>
+PREFIX sh: <http://www.w3.org/ns/shacl#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX ex: <http://example.com/>
+
+CONSTRUCT {
+  ?s <givenName> ?givenName .
+  ?s <familyName> ?familyName .
+  ?s <callSign> ?callSign .
+  ?s <colleague> ?colleague .
+  ?s <description> ?description .
+  ?s <abstract> ?abstract .
+  ?s <birthDate> ?birthDate .
+  ?s <gender> ?gender .
+  ?s <address> ?address .
+  ?address rdf:type ?address_rdftype .
+  ?address <streetAddress> ?address_streetAddress .
+  ?address <addressRegion> ?address_addressRegion .
+  ?address <addressLocality> ?address_addressLocality .
+  ?address <postalCode> ?address_postalCode .
+  ?address <addressCountry> ?address_addressCountry .
+}
+WHERE {
+
+{
+VALUES ?s { <http://dbpedia.org/resource/Søren_Kierkegaard> }
+
+  ?s <givenName> ?givenName .
+
+} UNION
+
+{
+VALUES ?s { <http://dbpedia.org/resource/Søren_Kierkegaard> }
+
+  ?s <familyName> ?familyName .
+
+} UNION
+
+{
+VALUES ?s { <http://dbpedia.org/resource/Søren_Kierkegaard> }
+
+  OPTIONAL {?s <callSign> ?callSign_en .
+  FILTER (lang(?callSign_en) = 'en') }
+  OPTIONAL {?s <callSign> ?callSign_nl .
+  FILTER (lang(?callSign_nl) = 'nl') }
+  BIND(COALESCE(?callSign_en, ?callSign_nl) as ?callSign)
+
+} UNION
+
+{
+VALUES ?s { <http://dbpedia.org/resource/Søren_Kierkegaard> }
+
+  OPTIONAL {
+    ?s <colleague> ?colleague .
+  }
+
+} UNION
+
+{
+VALUES ?s { <http://dbpedia.org/resource/Søren_Kierkegaard> }
+
+  ?s <description> ?description .
+
+} UNION
+
+{
+VALUES ?s { <http://dbpedia.org/resource/Søren_Kierkegaard> }
+
+  ?s <abstract> ?abstract .
+
+} UNION
+
+{
+VALUES ?s { <http://dbpedia.org/resource/Søren_Kierkegaard> }
+
+  OPTIONAL {
+    ?s <birthDate> ?birthDate .
+  }
+
+} UNION
+
+{
+VALUES ?s { <http://dbpedia.org/resource/Søren_Kierkegaard> }
+
+  OPTIONAL {
+    ?s <gender> ?gender .
+  }
+
+} UNION
+
+{
+VALUES ?s { <http://dbpedia.org/resource/Søren_Kierkegaard> }
+
+  OPTIONAL {
+    ?s <address> ?address .
+    ?address rdf:type ?address_rdftype .
+    FILTER(?address_rdftype = <https://schema.org/PostalAddress>)
+    ?address <streetAddress> ?address_streetAddress .
+    ?address <addressRegion> ?address_addressRegion .
+    ?address <addressLocality> ?address_addressLocality .
+    ?address <postalCode> ?address_postalCode .
+    ?address <addressCountry> ?address_addressCountry .
+  }
+
+}
+
+}
+
